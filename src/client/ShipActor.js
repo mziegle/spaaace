@@ -11,21 +11,36 @@ export default class ShipActor {
         PixiParticles = require('pixi-particles');
         this.gameEngine = renderer.gameEngine;
         this.backLayer = renderer.layer1;
+
+        this.shipSprites = []
+
+        for (var key in PIXI.loader.resources) {
+            if (key.indexOf("ship")===0) {
+                var shipSprite = new PIXI.Sprite(PIXI.loader.resources[key].texture)
+                shipSprite.anchor.set(0.5, 0.5);
+                shipSprite.width = 50;
+                shipSprite.height = 45;
+                this.shipSprites.push(shipSprite);
+            }
+        }
+
+        var random = Math.floor((Math.random() * this.shipSprites.length));
+        this.setShip(this.shipSprites[random]);
+    }
+
+    setShip(shipSprite) {
+        if (this.shipSprite) this.shipSprite.destroy();
+        if (this.shipContainerSprite) this.shipContainerSprite.destroy();
+
+        this.shipSprite = shipSprite;
         this.sprite = new PIXI.Container();
         this.shipContainerSprite = new PIXI.Container();
-
-        this.shipSprite = new PIXI.Sprite(PIXI.loader.resources.ship.texture);
 
         // keep a reference to the actor from the sprite
         this.sprite.actor = this;
 
-
-        this.shipSprite.anchor.set(0.5, 0.5);
-        this.shipSprite.width = 50;
-        this.shipSprite.height = 45;
-
-
         this.addThrustEmitter();
+
         this.sprite.addChild(this.shipContainerSprite);
         this.shipContainerSprite.addChild(this.shipSprite);
     }
