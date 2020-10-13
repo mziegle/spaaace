@@ -11,7 +11,8 @@ export default class SpaaaceRenderer extends Renderer {
 
     get ASSETPATHS(){
         return {
-            ship: 'assets/ship1.png',
+            ship1: 'assets/ship1.png',
+            ship2: 'assets/ship2.png',
             missile: 'assets/shot.png',
             bg1: 'assets/space3.png',
             bg2: 'assets/space2.png',
